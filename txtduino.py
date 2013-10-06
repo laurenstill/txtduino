@@ -14,9 +14,16 @@ button = Button(board, BUTTON_PIN)
 
 msg_sent = False
 
+
 def down_press():
   global msg_sent
   print "button down"
+
+
+  print ("I need to know what number to text")
+  phone_number = raw_input(">")
+  print ("What message would you like to send?")
+  message = raw_input(">")
 
   if not msg_sent:
 
@@ -26,8 +33,8 @@ def down_press():
           client = TwilioRestClient(settings.twilio_account_sid,
                                 settings.twilio_auth_token)
           message = client.sms.messages.create(
-              body="Hello from Julia's rad Arduino!",
-              to=settings.your_phone_number,
+              body=message,
+              to=phone_number,
               from_=settings.your_twilio_number)
 
       except TwilioRestException as e:
@@ -41,6 +48,7 @@ def down_press():
 
 def up_press():
   print "button up"
+
 
 button.down(down_press)
 button.up(up_press)
